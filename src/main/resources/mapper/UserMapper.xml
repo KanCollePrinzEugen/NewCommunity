@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.momoandnono.community.mapper.UserMapper">
+
+<!--    查询用户分页-->
+   <select id="selectPage" resultType="top.momoandnono.community.pojo.response.UserResponse">
+        SELECT
+               tu.id                  as id,
+               tu.username            as username,
+               tu.password            as password,
+               tu.nickname            as nickname,
+               tu.mobile              as mobile,
+               tu.state               as state,
+               tu.add_time            as ctime,
+               tu.update_time         as uptime,
+               tr.id                  as roleId,
+               tr.name                as roleName
+        FROM sys_user tu
+            LEFT JOIN mall_user_role tur on tu.id = tur.u_id
+            LEFT JOIN sys_role tr on tur.r_id = tr.id
+        <where>
+            ${ew.sqlSegment}
+        </where>
+   </select>
+</mapper>
